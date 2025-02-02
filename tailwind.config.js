@@ -20,40 +20,40 @@ export default {
             },
             colors: {
                 primary: {
-                    50: "#e0f7fa",
-                    100: "#b2ebf2",
-                    200: "#80deea",
-                    300: "#4dd0e1",
-                    400: "#26c6da",
-                    500: "#00bcd4",
-                    600: "#00acc1",
-                    700: "#0097a7",
-                    800: "#00838f",
-                    900: "#006064",
+                    50: "#e0f7ff", // Celeste muy claro
+                    100: "#b3e5fc",
+                    200: "#81d4fa",
+                    300: "#4fc3f7",
+                    400: "#29b6f6",
+                    500: "#03a9f4", // Celeste principal
+                    600: "#039be5",
+                    700: "#0288d1",
+                    800: "#0277bd",
+                    900: "#01579b", // Azul oscuro para contrastes
                 },
                 secondary: {
-                    50: "#e8f5e9",
-                    100: "#c8e6c9",
-                    200: "#a5d6a7",
-                    300: "#81c784",
-                    400: "#66bb6a",
-                    500: "#4caf50",
-                    600: "#43a047",
-                    700: "#388e3c",
-                    800: "#2e7d32",
-                    900: "#1b5e20",
+                    50: "#ffffff", // Blanco puro
+                    100: "#f8f9fa", // Blanco ligeramente grisáceo
+                    200: "#f1f3f5",
+                    300: "#e9ecef",
+                    400: "#dee2e6",
+                    500: "#ced4da", // Gris claro para balancear
+                    600: "#adb5bd",
+                    700: "#868e96",
+                    800: "#495057",
+                    900: "#343a40", // Gris oscuro para contrastar
                 },
                 accent: {
-                    50: "#fff3e0",
-                    100: "#ffe0b2",
-                    200: "#ffcc80",
-                    300: "#ffb74d",
-                    400: "#ffa726",
-                    500: "#ff9800",
-                    600: "#fb8c00",
-                    700: "#f57c00",
-                    800: "#ef6c00",
-                    900: "#e65100",
+                    50: "#ffebee", // Rojo muy claro
+                    100: "#ffcdd2",
+                    200: "#ef9a9a",
+                    300: "#e57373",
+                    400: "#ef5350",
+                    500: "#f44336", // Rojo para destacar
+                    600: "#e53935",
+                    700: "#d32f2f",
+                    800: "#c62828",
+                    900: "#b71c1c",
                 },
                 neutral: {
                     50: "#fafafa",

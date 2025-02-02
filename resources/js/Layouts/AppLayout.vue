@@ -1,6 +1,5 @@
 <script setup>
-import { ref } from "vue";
-import { Head, router } from "@inertiajs/vue3";
+import { Head } from "@inertiajs/vue3";
 import Header from "@/Components/Layout/Header.vue";
 import Aside from "@/Components/Layout/Aside.vue";
 import Footer from "@/Components/Layout/Footer.vue";
@@ -8,10 +7,6 @@ import Footer from "@/Components/Layout/Footer.vue";
 defineProps({
     title: String,
 });
-
-const logout = () => {
-    router.post(route("logout"));
-};
 </script>
 
 <template>
