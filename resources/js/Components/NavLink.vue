@@ -16,7 +16,7 @@ const props = defineProps({
 // Clases dinámicas para el enlace activo
 const classes = computed(() => {
     return props.active
-        ? "flex items-center p-2 rounded-lg bg-blue-100 text-blue-700 transition-colors duration-200"
+        ? "flex items-center p-2 rounded-lg text-blue-500 bg-blue-100 text-blue-700 transition-colors duration-200"
         : "flex items-center p-2 rounded-lg text-blue-500 hover:bg-blue-100 hover:text-blue-700 transition-colors duration-200";
 });
 </script>

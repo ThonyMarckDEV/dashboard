@@ -14,77 +14,75 @@ const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 const myPreset = definePreset(Aura, {
     semantic: {
         primary: {
-            50: "#e0f7fa", // Celeste muy claro
-            100: "#b2ebf2", // Celeste claro
-            200: "#80deea", // Celeste pastel
-            300: "#4dd0e1", // Celeste mediano
-            400: "#26c6da", // Celeste vibrante
-            500: "#00bcd4", // Celeste estándar (primario)
-            600: "#00acc1", // Celeste oscuro
-            700: "#0097a7", // Celeste más oscuro
-            800: "#00838f", // Celeste profundo
-            900: "#006064", // Celeste noche
+            0: "#ffffff",
+            50: " {teal.50}",
+            100: "{teal.100}",
+            200: "{teal.200}",
+            300: "{teal.300}",
+            400: "{teal.400}",
+            500: "{teal.500}",
+            600: "{teal.600}",
+            700: "{teal.700}",
+            800: "{teal.800}",
+            900: "{teal.900}",
+            950: "{teal.950}",
         },
-        secondary: {
-            50: "#e8f5e9", // Verde muy claro
-            100: "#c8e6c9", // Verde claro
-            200: "#a5d6a7", // Verde pastel
-            300: "#81c784", // Verde mediano
-            400: "#66bb6a", // Verde vibrante
-            500: "#4caf50", // Verde estándar (secundario)
-            600: "#43a047", // Verde oscuro
-            700: "#388e3c", // Verde más oscuro
-            800: "#2e7d32", // Verde profundo
-            900: "#1b5e20", // Verde noche
+        formField: {
+            paddingX: "1rem",
+            paddingY: "0.5rem",
+        },
+        myButton: {
+            // paddingX: "3rem",
+            // paddingY: "1rem",
+            marginX: "0.5rem",
         },
         colorScheme: {
             light: {
-                primary: {
-                    color: "#00bcd4", // Celeste estándar
-                    inverseColor: "#ffffffd6", // Blanco
-                    hoverColor: "#00acc1", // Celeste oscuro
-                    activeColor: "#0097a7", // Celeste más oscuro
-                },
-                highlight: {
-                    background: "#00bcd4", // Celeste estándar
-                    focusBackground: "#00acc1", // Celeste oscuro
-                    color: "#ffffff", // Blanco
-                    focusColor: "#ffffff", // Blanco
+                surface: {
+                    0: "#ffffff",
+                    50: " {cyan.50}",
+                    100: "{cyan.100}",
+                    200: "{cyan.200}",
+                    300: "{cyan.300}",
+                    400: "{cyan.400}",
+                    500: "{cyan.500}",
+                    600: "{cyan.600}",
+                    700: "{cyan.700}",
+                    800: "{cyan.800}",
+                    900: "{cyan.900}",
+                    950: "{cyan.950}",
                 },
                 formField: {
                     hoverBorderColor: "{primary.color}",
-                    borderRadius: "border.radius.md",
-                    focusRing: {
-                        width: "2px",
-                        style: "none",
-                        color: "{primary.color}",
-                        offset: "1px",
-                        shadow: "none",
-                    },
                 },
             },
             dark: {
-                primary: {
-                    color: "#4dd0e1", // Celeste mediano
-                    inverseColor: "#006064", // Celeste noche
-                    hoverColor: "#80deea", // Celeste pastel
-                    activeColor: "#00bcd4", // Celeste estándar
-                },
-                highlight: {
-                    background: "rgba(255, 255, 255, .12)", // Fondo translúcido
-                    focusBackground: "rgba(255, 255, 255, .24)", // Fondo translúcido más fuerte
-                    color: "rgba(255,255,255,.87)", // Blanco
-                    focusColor: "rgba(255,255,255,.87)", // Blanco
+                surface: {
+                    0: "#ffffff",
+                    50: "{slate.50}",
+                    100: "{slate.100}",
+                    200: "{slate.200}",
+                    300: "{slate.300}",
+                    400: "{slate.400}",
+                    500: "{slate.500}",
+                    600: "{slate.600}",
+                    700: "{slate.700}",
+                    800: "{slate.800}",
+                    900: "{slate.900}",
+                    950: "{slate.950}",
                 },
                 formField: {
-                    hoverBorderColor: "{primary.color}",
+                    hoverBorderColor: "{primary.100}",
                 },
             },
         },
     },
+
     components: {
         button: {
-            // borderRadius: "1rem",
+            // paddingX: "{my.button.padding.x}",
+            // paddingY: "{my.button.padding.y}",
+            marginX: "{my.button.margin.x}",
         },
     },
 });
@@ -103,7 +101,7 @@ createInertiaApp({
                 theme: {
                     preset: myPreset,
                     options: {
-                        darkModeSelector: ".dark",
+                        darkModeSelector: ".my-app-dark",
                     },
                 },
             })

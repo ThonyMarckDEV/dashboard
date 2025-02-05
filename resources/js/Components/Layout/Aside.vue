@@ -1,14 +1,14 @@
 <template>
     <aside
         :class="[
-            'bg-primary-100 text-primary-900 w-64 transition-all duration-300 mb-2 rounded-r-lg shadow hover:shadow-lg',
+            'text-primary-900 w-64 transition-all duration-300 mb-2 rounded-r-lg shadow hover:shadow-lg',
             {
                 'ml-0': AsideStore.isAsideVisible,
                 '-ml-64': !AsideStore.isAsideVisible,
             },
             ThemeStore.isDarkMode
                 ? 'dark:bg-slate-800 dark:text-white'
-                : 'bg-primary-50 text-primary-900',
+                : 'text-primary-900',
         ]"
     >
         <nav class="p-4">
@@ -31,10 +31,12 @@
                                 <i
                                     :class="[
                                         item.icon,
-                                        'text-lg text-primary-700 dark:text-primary-300',
+                                        'text-lg text-primary-700 text-blue-500',
                                     ]"
                                 ></i>
-                                <span class="transition-opacity duration-300">
+                                <span
+                                    class="transition-opacity duration-300 text-blue-500"
+                                >
                                     {{ item.label }}
                                 </span>
                             </div>
@@ -44,7 +46,7 @@
                                     openMenus[index]
                                         ? 'pi-chevron-down'
                                         : 'pi-chevron-right',
-                                    'text-primary-700 dark:text-primary-300',
+                                    'text-blue-500 dark:text-primary-300',
                                 ]"
                             ></i>
                         </div>
@@ -140,7 +142,7 @@ const menuItems = [
         label: "Médico",
         icon: "pi pi-heart",
         submenu: [
-            { label: "Registro", route: "register", icon: "pi pi-plus" },
+            { label: "Registro", route: "doctor.index", icon: "pi pi-plus" },
             { label: "Consultas", route: "dashboard", icon: "pi pi-calendar" },
             { label: "Pacientes", route: "dashboard", icon: "pi pi-users" },
         ],

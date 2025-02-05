@@ -6,6 +6,13 @@
     display: none;
 }
 
+body {
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    min-height: 100vh;
+    background-color: var(--body-bg);
+}
+
 /* resources/css/app.css */
 .p-menu {
     border-right: 1px solid #e5e7eb; /* Borde derecho */
@@ -18,4 +25,25 @@
 
 .p-menuitem-link:hover {
     background-color: rgba(255, 255, 255, 0.1); /* Fondo al hacer hover */
+}
+
+/* clases para adaptar el modo oscuro */
+
+.mi_card {
+    background-color: var(--card-bg);
+    padding: 2rem;
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+}
+
+:root {
+    --body-bg: var(--p-surface-50);
+    --card-bg: var(--p-surface-100);
+    --card-border: var(--p-superface-900);
+}
+
+:root [class="my-app-dark"] {
+    --body-bg: var(--p-surface-900);
+    --card-bg: var(--p-surface-950);
+    --card-border: var(--p-superface-300);
 }

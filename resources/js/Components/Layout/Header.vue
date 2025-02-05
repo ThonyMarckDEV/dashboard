@@ -1,7 +1,7 @@
 <template>
     <Menubar
         :model="items"
-        class="my-2 bg-primary-500 text-white rounded-lg shadow-md"
+        class="p-0 my-1 bg-primary-500 text-white rounded-lg shadow-md"
     >
         <template #start>
             <Button
@@ -19,7 +19,7 @@
             <div class="flex items-center gap-2">
                 <Button
                     :icon="ThemeStore.isDarkMode ? 'pi pi-moon' : 'pi pi-sun'"
-                    severity="info"
+                    severity="secondary"
                     rounded
                     @click="ThemeStore.toggleDarkMode"
                 >
@@ -41,7 +41,6 @@
         :style="{ width: '25rem' }"
         modal
         position="top"
-        class="bg-primary-50 dark:bg-primary-800 dark:text-white"
     >
         <span class="text-primary-700 dark:text-primary-300 block mb-8">
             ¿Desea cerrar sesión?

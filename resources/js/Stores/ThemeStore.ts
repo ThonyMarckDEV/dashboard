@@ -7,7 +7,10 @@ export const useThemeStore = defineStore("theme", {
     actions: {
         toggleDarkMode() {
             this.isDarkMode = !this.isDarkMode;
-            document.documentElement.classList.toggle("dark", this.isDarkMode);
+            document.documentElement.classList.toggle(
+                "my-app-dark",
+                this.isDarkMode
+            );
         },
     },
 });
