@@ -29,7 +29,7 @@
                         type="text"
                         v-model="nameDoctor"
                         class="w-32 sm:w-auto"
-                        @keyup.enter="searchDoctorName"
+                        @input="handleSearchInput"
                     />
                 </div>
                 <div>
@@ -90,6 +90,7 @@ import { ref } from "vue";
 import { Badge, Button, Column, DataTable, InputText, Tag } from "primevue";
 
 import { colorTag, textTag } from "@/Utils/state";
+import debounce from "lodash.debounce";
 
 const { doctorsData, pagination, loadingTable } = defineProps<{
     doctorsData: Doctor[];
@@ -111,8 +112,13 @@ function nextPage(event: any) {
     emit("loadingPage", newPage);
 }
 
-function searchDoctorName() {
-    emit("searchDoctor", nameDoctor.value);
+const debounceSearchDoctor = debounce((value: string) => {
+    emit("searchDoctor", value);
+}, 400);
+
+function handleSearchInput(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    debounceSearchDoctor(value);
 }
 
 function emitIdDoctor(id: number) {
