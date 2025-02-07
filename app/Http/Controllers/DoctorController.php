@@ -5,16 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Doctor;
 use App\Http\Requests\StoreDoctorRequest;
 use App\Http\Requests\UpdateDoctorRequest;
+// use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class DoctorController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        return Inertia::render('Doctor/indexDoctor');
+        // autorizacion para que pueda acceder al metodo
+        Gate::authorize('viewAny', Doctor::class);
+        $doctors = Doctor::all();
+        return Inertia::render('Doctor/indexDoctor', ['doctors' => $doctors]);
     }
 
     /**

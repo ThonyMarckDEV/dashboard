@@ -84,6 +84,9 @@ const myPreset = definePreset(Aura, {
             // paddingY: "{my.button.padding.y}",
             marginX: "{my.button.margin.x}",
         },
+        menubar: {
+            padding: "0rem",
+        },
     },
 });
 

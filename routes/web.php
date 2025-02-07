@@ -13,9 +13,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     // DASHBOARD inicial
     Route::get('/dashboard', [DashboardController::class, 'Dashboard'])->name('dashboard');
     Route::prefix('modulo')->group(function () {
-        // rutas resource
+        // DOCTOR
+        Route::resource('/doctor', DoctorController::class);
         // 
     });
-    // DOCTOR
-    Route::resource('/doctor', DoctorController::class);
 });

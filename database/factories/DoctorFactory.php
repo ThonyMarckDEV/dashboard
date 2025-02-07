@@ -17,7 +17,10 @@ class DoctorFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'code' => $this->faker->unique()->numerify('DOC###'), // Ej: DOC123
+            'name' => $this->faker->name(),
+            'start_date' => $this->faker->dateTimeBetween('-5 years', 'now'),
+            'state' => $this->faker->boolean(),
         ];
     }
 }

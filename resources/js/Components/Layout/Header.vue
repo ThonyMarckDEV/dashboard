@@ -1,7 +1,7 @@
 <template>
     <Menubar
         :model="items"
-        class="p-0 my-1 bg-primary-500 text-white rounded-lg shadow-md"
+        class="p-0 my-1 bg-primary-500 rounded-lg shadow-md"
     >
         <template #start>
             <Button
@@ -11,8 +11,8 @@
                 @click="AsideStore.toggleAside"
             >
             </Button>
-            <h1 class="text-lg font-bold text-primary-300 mt-5 mb-5 ml-10">
-                Bienvenido Junior
+            <h1 class="text-lg font-bold mt-5 mb-5 ml-10">
+                Bienvenido {{ $page.props.auth.user.name }}!
             </h1>
         </template>
         <template #end>

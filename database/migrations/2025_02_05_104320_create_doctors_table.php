@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('doctors', function (Blueprint $table) {
             $table->id();
+            $table->char('code', 11)->unique();
+            $table->string('name', 50)->unique();
+            $table->timestamp('start_date');
+            $table->boolean('state')->default(true)->comment('true: activo, false: inactivo');
             $table->timestamps();
         });
     }
