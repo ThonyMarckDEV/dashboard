@@ -4,19 +4,21 @@
         class="p-0 my-1 bg-primary-500 rounded-lg shadow-md"
     >
         <template #start>
-            <Button
-                icon="pi pi-bars"
-                aria-label="menu"
-                class="p-button-rounded p-button-text text-white hover:bg-primary-600"
-                @click="AsideStore.toggleAside"
-            >
-            </Button>
-            <h1 class="text-lg font-bold mt-5 mb-5 ml-10">
-                Bienvenido {{ $page.props.auth.user.name }}!
-            </h1>
+            <div class="flex items-center p-0">
+                <Button
+                    icon="pi pi-bars"
+                    aria-label="menu"
+                    class="p-button-rounded p-button-text text-white hover:bg-primary-600"
+                    @click="AsideStore.toggleAside"
+                >
+                </Button>
+                <h1 class="text-sm font-bold mt-5 mb-5 ml-1">
+                    Bienvenido {{ $page.props.auth.user.name }}!
+                </h1>
+            </div>
         </template>
         <template #end>
-            <div class="flex items-center gap-2">
+            <div class="flex items-center px-2 gap-2">
                 <Button
                     :icon="ThemeStore.isDarkMode ? 'pi pi-moon' : 'pi pi-sun'"
                     severity="secondary"
@@ -24,6 +26,13 @@
                     @click="ThemeStore.toggleDarkMode"
                 >
                 </Button>
+                <Button
+                    icon="pi pi-expand"
+                    rounded
+                    variant="outlined"
+                    aria-label="pantalla completa"
+                    @click="screen"
+                />
                 <Button
                     icon="pi pi-sign-out"
                     rounded
@@ -85,6 +94,14 @@ const logout = () => {
             },
         }
     );
+};
+
+const screen = () => {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+    } else if (document.exitFullscreen) {
+        document.exitFullscreen();
+    }
 };
 </script>
 

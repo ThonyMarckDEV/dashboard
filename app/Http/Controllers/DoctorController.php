@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Doctor;
 use App\Http\Requests\StoreDoctorRequest;
 use App\Http\Requests\UpdateDoctorRequest;
+use App\Http\Resources\DoctorResource;
+// use GuzzleHttp\Psr7\Request;
 // use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
@@ -12,22 +14,40 @@ use Inertia\Inertia;
 
 class DoctorController extends Controller
 {
-    public function index()
+    // funcion para retornar la vista del modulo doctor
+    public function listDoctor()
     {
         // autorizacion para que pueda acceder al metodo
         Gate::authorize('viewAny', Doctor::class);
-        $doctors = Doctor::all();
-        return Inertia::render('Doctor/indexDoctor', ['doctors' => $doctors]);
+        try {
+            $name = request('name');
+            $doctors = Doctor::when($name, function ($query, $name) {
+                return $query->where('name', 'like', "%$name%");
+            })->paginate(20);
+            return response()->json([
+                'data' => DoctorResource::collection($doctors),
+                'pagination' => [
+                    'total' => $doctors->total(),
+                    'current_page' => $doctors->currentPage(),
+                    'per_page' => $doctors->perPage(),
+                    'last_page' => $doctors->lastPage(),
+                    'from' => $doctors->firstItem(),
+                    'to' => $doctors->lastItem(),
+                ],
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'message' => 'Error al cargar los datos',
+                'error' => $th->getMessage(),
+            ], 500);
+        }
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    // funcion index para cargar los datos y el filtro para la tabla del modulo doctor
+    public function index()
     {
-        //
+        Gate::authorize('viewAny', Doctor::class);
+        return Inertia::render('Doctor/indexDoctor');
     }
-
     /**
      * Store a newly created resource in storage.
      */

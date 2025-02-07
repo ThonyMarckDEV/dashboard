@@ -9,6 +9,8 @@ import { createPinia } from "pinia"; // Importa Pinia
 import PrimeVue from "primevue/config"; // Importa PrimeVue 4
 import Aura from "@primevue/themes/aura";
 import "primeicons/primeicons.css";
+import ToastService from "primevue/toastservice";
+
 import { definePreset } from "@primevue/themes";
 const appName = import.meta.env.VITE_APP_NAME || "Laravel";
 const myPreset = definePreset(Aura, {
@@ -110,6 +112,7 @@ createInertiaApp({
             })
             .use(createPinia()) // Agrega Pinia a la instancia de Vue
             .use(ZiggyVue)
+            .use(ToastService)
             .mount(el);
     },
     progress: {

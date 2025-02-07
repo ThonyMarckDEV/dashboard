@@ -31,7 +31,7 @@ body {
 
 .mi_card {
     background-color: var(--card-bg);
-    padding: 2rem;
+    padding: 0.3rem;
     border: 1px solid var(--card-border);
     border-radius: 12px;
 }

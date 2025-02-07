@@ -14,7 +14,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
     Route::get('/dashboard', [DashboardController::class, 'Dashboard'])->name('dashboard');
     Route::prefix('modulo')->group(function () {
         // DOCTOR
-        Route::resource('/doctor', DoctorController::class);
-        // 
+        Route::resource('doctor', DoctorController::class)->except(['create']);
+        // ruta para listar
+        Route::get('doctors/list', [DoctorController::class, 'listDoctor'])->name('doctor.list');
     });
 });

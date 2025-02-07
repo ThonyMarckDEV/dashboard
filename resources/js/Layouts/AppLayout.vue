@@ -2,7 +2,8 @@
 import { Head } from "@inertiajs/vue3";
 import Header from "@/Components/Layout/Header.vue";
 import Aside from "@/Components/Layout/Aside.vue";
-import Footer from "@/Components/Layout/Footer.vue";
+// import Footer from "@/Components/Layout/Footer.vue";
+import { Toast } from "primevue";
 
 defineProps({
     title: String,
@@ -17,6 +18,7 @@ defineProps({
         <div class="flex flex-1">
             <Aside />
             <main class="flex-1 p-4">
+                <Toast />
                 <slot />
             </main>
         </div>
