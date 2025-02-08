@@ -12,4 +12,13 @@ export const DoctorServices = {
             throw error;
         }
     },
+    async getDoctorId(id: number) {
+        try {
+            const response = await axios.get(`/modulo/doctor/${id}`);
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching doctor:", error);
+            throw error;
+        }
+    },
 };

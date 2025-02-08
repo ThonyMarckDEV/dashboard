@@ -6,4 +6,10 @@ interface Doctor {
     state: boolean;
 }
 
-export type { Doctor };
+interface DoctorResponse {
+    success: boolean;
+    data: Doctor;
+    message: string;
+}
+
+export type { Doctor, DoctorResponse };
