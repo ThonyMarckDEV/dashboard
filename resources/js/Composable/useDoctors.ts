@@ -12,12 +12,12 @@ export const useDoctors = () => {
     const father = reactive({
         doctorsDate: [] as Doctor[],
         pagination: {} as Pagination,
-        loadingTable: false,
+        loadingTable: false as boolean,
         filter: "" as string,
         idDoctor: 0 as number,
         statusModal: {
-            register: false,
-            delete: false,
+            register: false as boolean,
+            delete: false as boolean,
         },
         doctorData: {} as Doctor,
     });

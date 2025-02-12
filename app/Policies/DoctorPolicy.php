@@ -13,6 +13,7 @@ class DoctorPolicy
     public function viewAny(User $user): bool
     {
         return $user->hasPermissionTo('view doctors');
+        // return $user->hasRole('admin');
     }
 
     /**
