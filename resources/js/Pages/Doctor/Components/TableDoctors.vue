@@ -25,6 +25,7 @@
             <div class="flex justify-between gap-2">
                 <div class="mr-auto flex items-center gap-2">
                     <InputText
+                        id="search"
                         placeholder="Buscar"
                         type="text"
                         v-model="nameDoctor"
@@ -33,7 +34,7 @@
                     />
                 </div>
                 <div>
-                    <Button label="Nuevo" @click="emitIdDoctor(0)" />
+                    <Button label="Nuevo" @click="emitIdDoctorCreate(0)" />
                 </div>
             </div>
         </template>
@@ -68,7 +69,7 @@
                         rounded
                         class="p-button-sm"
                         tooltip="Editar"
-                        @click="emitIdDoctor(slotProps.data.id)"
+                        @click="emitIdDoctorCreate(slotProps.data.id)"
                     />
                     <Button
                         icon="pi pi-trash"
@@ -77,6 +78,7 @@
                         class="p-button-sm"
                         severity="danger"
                         tooltip="Eliminar"
+                        @click="emitIdDoctorDelete(slotProps.data.id)"
                     />
                 </div>
             </template>
@@ -121,8 +123,12 @@ function handleSearchInput(event: Event) {
     debounceSearchDoctor(value);
 }
 
-function emitIdDoctor(id: number) {
+function emitIdDoctorCreate(id: number) {
     emit("emitIdDoctor", id);
+}
+
+function emitIdDoctorDelete(id: number) {
+    emit("emitDeleteDoctor", id);
 }
 </script>
 <style scoped></style>

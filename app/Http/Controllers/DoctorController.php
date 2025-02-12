@@ -6,8 +6,7 @@ use App\Models\Doctor;
 use App\Http\Requests\StoreDoctorRequest;
 use App\Http\Requests\UpdateDoctorRequest;
 use App\Http\Resources\DoctorResource;
-// use GuzzleHttp\Psr7\Request;
-// use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
@@ -15,7 +14,7 @@ use Inertia\Inertia;
 class DoctorController extends Controller
 {
     // funcion para retornar la vista del modulo doctor
-    public function listDoctor()
+    public function listDoctor(): JsonResponse
     {
         // autorizacion para que pueda acceder al metodo
         Gate::authorize('viewAny', Doctor::class);
@@ -51,27 +50,27 @@ class DoctorController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreDoctorRequest $request)
+    public function store(StoreDoctorRequest $request): JsonResponse
     {
-        //
+        $validated = $request->validate();
+        $validated = $request->safe()->except(['state']);
+        return response()->json([
+            'message' => 'Doctor creado con exito',
+            'data' => new DoctorResource(Doctor::create($validated)),
+        ], 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Doctor $doctor)
+    public function show(Doctor $doctor): JsonResponse
     {
-        //
+        return response()->json([
+            'success' => true,
+            'message' => 'Doctor encontrado',
+            'data' => new DoctorResource($doctor),
+        ], 200);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Doctor $doctor)
-    {
-        //
-    }
-
     /**
      * Update the specified resource in storage.
      */

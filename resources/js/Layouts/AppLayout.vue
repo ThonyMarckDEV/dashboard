@@ -18,7 +18,7 @@ defineProps({
         <div class="flex flex-1">
             <Aside />
             <main class="flex-1 p-4">
-                <Toast />
+                <Toast position="bottom-right" group="br" />
                 <slot />
             </main>
         </div>
