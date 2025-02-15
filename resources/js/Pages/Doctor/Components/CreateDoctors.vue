@@ -2,12 +2,15 @@
     <Dialog
         :visible="isVisible"
         modal
-        :header="isDoctorEmpty(doctor) ? 'Nuevo Doctor' : 'Editar Doctor'"
+        :header="doctor && doctor.id ? 'Actualizar Doctor' : 'Crear Doctor'"
         :style="{ width: '40vw' }"
         :breakpoints="{ '960px': '75vw', '640px': '100vw' }"
         @update:visible="closeModal"
     >
-        <div class="flex flex-col gap-4 w-full sm:W-40 pt-3">
+        <form
+            @submit.prevent="sutmit"
+            class="flex flex-col gap-4 w-full sm:W-40 pt-3"
+        >
             <FloatLabel variant="on">
                 <InputText
                     v-model="doctor.name"
@@ -28,67 +31,81 @@
                 <label for="code">Codigo</label>
             </FloatLabel>
             <FloatLabel variant="on">
-                <InputText
+                <DatePicker
                     id="fecha"
-                    type="date"
                     class="w-full"
                     v-model="doctor.start_date"
+                    input-id="fecha"
+                    icon-display="input"
                 />
                 <label for="fecha">Fecha</label>
             </FloatLabel>
-            <FloatLabel variant="on">
-                <Select
-                    id="state"
-                    label-id="state"
-                    class="w-full"
-                    v-model="stateDoctor"
-                    :options="doctorStates"
-                    optionLabel="label"
-                    optionValue="value"
-                    @update:modelValue="updateState"
+            <ToggleButton
+                id="state"
+                v-model="doctor.state"
+                onLabel="Activo"
+                offLabel="Inactivo"
+                onIcon="pi pi-check"
+                offIcon="pi pi-times"
+            />
+            <!-- botones para cancelar y guardar o actualizar -->
+            <div class="flex justify-end gap-4">
+                <Button
+                    label="Guardar"
+                    :icon="doctor && doctor.id ? 'pi pi-pencil' : 'pi pi-check'"
+                    @click="sutmit"
                 />
-            </FloatLabel>
-        </div>
-        {{ doctor }}
+                <Button
+                    label="Cancelar"
+                    class="p-button-secondary"
+                    @click="closeModal"
+                />
+            </div>
+        </form>
+        {{ formulario }}
     </Dialog>
 </template>
 <script setup lang="ts">
-import { DatePicker, Dialog, FloatLabel, InputText, Select } from "primevue";
-import { Doctor } from "../Interfaces/InterfaceDoctor";
-import { computed, ref } from "vue";
-
+import {
+    Button,
+    DatePicker,
+    Dialog,
+    FloatLabel,
+    InputText,
+    ToggleButton,
+} from "primevue";
+import { Doctor } from "../Interfaces/Doctor";
+import { ref } from "vue";
 const { isVisible, doctor } = defineProps<{
     isVisible: boolean;
-    doctor: Doctor;
+    doctor?: Doctor;
 }>();
+
+const formulario = ref<Doctor>({
+    id: 0,
+    name: "",
+    code: "",
+    start_date: null,
+    state: null,
+});
 
 const emit = defineEmits<{
     (e: "emitCloseModal", state: boolean): void;
-    (e: "emitSuccessCreate", message: string): void;
+    (e: "emitSuccessCreate", dataForm: Doctor): void;
 }>();
 
 const closeModal = () => {
     emit("emitCloseModal", false);
 };
 
-const isDoctorEmpty = (doctor: Doctor): boolean => {
-    return !doctor || Object.keys(doctor).length === 0;
-};
-const doctorStates = ref([
-    { label: "Activo", value: 1 },
-    { label: "Inactivo", value: 0 },
-]);
-const stateDoctor = computed({
-    get: () => {
-        return doctor.state;
-    },
-    set: (value: boolean) => {
-        doctor.state = value;
-    },
-});
-
-const updateState = (value: boolean) => {
-    doctor.state = value;
+const sutmit = () => {
+    formulario.value.id = doctor?.id || 0;
+    formulario.value.name = doctor?.name || "";
+    formulario.value.code = doctor?.code || "";
+    formulario.value.start_date = doctor?.start_date || null;
+    formulario.value.state = doctor?.state || true;
+    emit("emitSuccessCreate", formulario.value);
+    // console.log(formulario.value);
 };
 </script>
 <style lang="css" scoped></style>

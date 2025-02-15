@@ -16,6 +16,7 @@
                 :is-visible="father.statusModal.register"
                 :doctor="father.doctorData"
                 @emit-close-modal="closeModalAll('register')"
+                @emit-success-create="saveDoctor"
             />
             <!-- modal to remove doctor -->
             <DeleteDoctors
@@ -23,7 +24,6 @@
                 :id-doctor="father.idDoctor"
                 @emit-close-modal="closeModalAll('delete')"
             />
-            <!-- {{ father.doctorData }} -->
         </div>
     </AppLayout>
 </template>
@@ -41,6 +41,7 @@ const {
     emitIdDoctorRegister,
     emitIdDoctorDelete,
     closeModalAll,
+    saveDoctor,
 } = useDoctors();
 </script>
 <style scoped></style>

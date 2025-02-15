@@ -1,8 +1,11 @@
 import { Pagination } from "@/Interfaces/Pagination";
+import { Doctor } from "@/Pages/Doctor/Interfaces/Doctor";
 import {
-    Doctor,
-    DoctorResponse,
-} from "@/Pages/Doctor/Interfaces/InterfaceDoctor";
+    toDoctor,
+    toDoctorDTO,
+} from "@/Pages/Doctor/Interfaces/DoctorConverter";
+import { DoctorDTO } from "@/Pages/Doctor/Interfaces/DoctorDTO";
+import { DoctorResponse } from "@/Pages/Doctor/Interfaces/DoctorResponse";
 import { DoctorServices } from "@/Services/DoctorServices";
 import { useToastUtil } from "@/Utils/Message";
 import { onMounted, reactive } from "vue";
@@ -10,7 +13,7 @@ import { onMounted, reactive } from "vue";
 export const useDoctors = () => {
     const { showInfo } = useToastUtil();
     const father = reactive({
-        doctorsDate: [] as Doctor[],
+        doctorsDate: [] as DoctorDTO[],
         pagination: {} as Pagination,
         loadingTable: false as boolean,
         filter: "" as string,
@@ -45,10 +48,38 @@ export const useDoctors = () => {
             );
             if (response.success) {
                 showInfo(response.message);
-                father.doctorData = response.data;
+                father.doctorData = toDoctor(response.data);
             }
         } catch (error) {
             console.error("Error fetching doctor:", error);
+        } finally {
+            father.loadingTable = false;
+        }
+    };
+    // guardar o editar doctor
+    const saveDoctor = async (doctor: Doctor) => {
+        father.loadingTable = true;
+        try {
+            // convertimos a dto
+            const doctorDTO = toDoctorDTO(doctor);
+            // si doctor.id es 0 es porque es un nuevo doctor
+            if (doctorDTO.id === 0) {
+                console.log("guardar doctor");
+                // const response = await DoctorServices.saveDoctor(doctorDTO);
+                // if (response.success) {
+                //     showInfo(response.message);
+                //     loadingDoctors(
+                //         father.pagination.current_page,
+                //         father.filter
+                //     );
+                //     father.statusModal.register = false;
+                // }
+            } else {
+                console.log("actualizar doctor");
+            }
+            console.log(doctorDTO);
+        } catch (error) {
+            console.error("Error saving doctor:", error);
         } finally {
             father.loadingTable = false;
         }
@@ -94,5 +125,6 @@ export const useDoctors = () => {
         emitIdDoctorDelete,
         closeModalAll,
         refreshDoctors,
+        saveDoctor,
     };
 };

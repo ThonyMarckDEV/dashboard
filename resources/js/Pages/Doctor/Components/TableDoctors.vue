@@ -87,15 +87,15 @@
 </template>
 <script setup lang="ts">
 import { Pagination } from "@/Interfaces/Pagination";
-import { Doctor } from "../Interfaces/InterfaceDoctor";
 import { ref } from "vue";
 import { Badge, Button, Column, DataTable, InputText, Tag } from "primevue";
 
 import { colorTag, textTag } from "@/Utils/state";
 import debounce from "lodash.debounce";
+import { DoctorDTO } from "../Interfaces/DoctorDTO";
 
 const { doctorsData, pagination, loadingTable } = defineProps<{
-    doctorsData: Doctor[];
+    doctorsData: DoctorDTO[];
     pagination: Pagination;
     loadingTable: boolean;
 }>();
