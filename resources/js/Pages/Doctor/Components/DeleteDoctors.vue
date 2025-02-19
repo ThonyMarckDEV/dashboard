@@ -7,11 +7,15 @@
         :breakpoints="{ '960px': '75vw', '640px': '100vw' }"
         @update:visible="closeModal"
     >
-        {{ idDoctor }}
+        <Button
+            label="eliminar"
+            severity="danger"
+            @click="emitIdDoctorDelete(idDoctor)"
+        />
     </Dialog>
 </template>
 <script setup lang="ts">
-import { Dialog } from "primevue";
+import { Button, Dialog } from "primevue";
 
 const { isVisible, idDoctor } = defineProps<{
     isVisible: boolean;
@@ -20,8 +24,12 @@ const { isVisible, idDoctor } = defineProps<{
 
 const emit = defineEmits<{
     (e: "emitCloseModal", state: boolean): void;
-    (e: "emitSuccessDelete", message: string): void;
+    (e: "emitSuccessDelete", idDoctor: number): void;
 }>();
+
+const emitIdDoctorDelete = (idDoctor: number) => {
+    emit("emitSuccessDelete", idDoctor);
+};
 
 const closeModal = () => {
     emit("emitCloseModal", false);

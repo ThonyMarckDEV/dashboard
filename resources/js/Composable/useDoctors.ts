@@ -8,10 +8,11 @@ import { DoctorDTO } from "@/Pages/Doctor/Interfaces/DoctorDTO";
 import { DoctorResponse } from "@/Pages/Doctor/Interfaces/DoctorResponse";
 import { DoctorServices } from "@/Services/DoctorServices";
 import { useToastUtil } from "@/Utils/Message";
+import axios from "axios";
 import { onMounted, reactive } from "vue";
 
 export const useDoctors = () => {
-    const { showInfo } = useToastUtil();
+    const { showInfo, showError } = useToastUtil();
     const father = reactive({
         doctorsDate: [] as DoctorDTO[],
         pagination: {} as Pagination,
@@ -38,22 +39,22 @@ export const useDoctors = () => {
     };
     const getDoctor = async (id: number) => {
         if (id === 0) {
-            father.doctorData = {} as Doctor;
+            father.doctorData = {
+                id: 0,
+                name: "",
+                code: "",
+                start_date: null,
+                state: true,
+            } as Doctor;
             return;
         }
-        father.loadingTable = true;
         try {
             const response: DoctorResponse = await DoctorServices.getDoctorId(
                 id
             );
-            if (response.success) {
-                showInfo(response.message);
-                father.doctorData = toDoctor(response.data);
-            }
+            father.doctorData = toDoctor(response.data);
         } catch (error) {
             console.error("Error fetching doctor:", error);
-        } finally {
-            father.loadingTable = false;
         }
     };
     // guardar o editar doctor
@@ -65,21 +66,62 @@ export const useDoctors = () => {
             // si doctor.id es 0 es porque es un nuevo doctor
             if (doctorDTO.id === 0) {
                 console.log("guardar doctor");
-                // const response = await DoctorServices.saveDoctor(doctorDTO);
-                // if (response.success) {
-                //     showInfo(response.message);
-                //     loadingDoctors(
-                //         father.pagination.current_page,
-                //         father.filter
-                //     );
-                //     father.statusModal.register = false;
-                // }
+                const response = await DoctorServices.saveDoctor(doctorDTO);
+                console.log(response);
+                if (response.success) {
+                    showInfo(response.message);
+                    loadingDoctors(
+                        father.pagination.current_page,
+                        father.filter
+                    );
+                    father.statusModal.register = false;
+                } else {
+                    if (response.errors) {
+                        for (const [field, message] of Object.entries(
+                            response.errors
+                        )) {
+                            showError(`${field}: ${message}`);
+                        }
+                    } else {
+                        showError(
+                            response.message || "Error al guardar el doctor"
+                        );
+                    }
+                }
             } else {
                 console.log("actualizar doctor");
+                const response = await DoctorServices.updateDoctor(doctorDTO);
+                if (response.success) {
+                    showInfo(response.message);
+                    loadingDoctors(
+                        father.pagination.current_page,
+                        father.filter
+                    );
+                    father.statusModal.register = false;
+                }
+                console.log(response);
             }
             console.log(doctorDTO);
         } catch (error) {
-            console.error("Error saving doctor:", error);
+            showError(
+                error.response.data.errors || "Error al guardar el doctor"
+            );
+        } finally {
+            father.loadingTable = false;
+        }
+    };
+    const deleteDoctor = async (doctor: number) => {
+        father.loadingTable = true;
+        try {
+            const response = await DoctorServices.deleteDoctor(doctor);
+            if (response.success) {
+                showInfo(response.message);
+                loadingDoctors(father.pagination.current_page, father.filter);
+                father.statusModal.delete = false;
+            }
+        } catch (error) {
+            console.error("Error deleting doctor:", error);
+            showError("Error al eliminar");
         } finally {
             father.loadingTable = false;
         }
@@ -126,5 +168,6 @@ export const useDoctors = () => {
         closeModalAll,
         refreshDoctors,
         saveDoctor,
+        deleteDoctor,
     };
 };

@@ -27,7 +27,28 @@ export const DoctorServices = {
             const response = await axios.post("/modulo/doctor", doctor);
             return response.data;
         } catch (error) {
-            console.error("Error saving doctor:", error);
+            console.error("Error saving doctor hola:", error);
+            throw error;
+        }
+    },
+    async updateDoctor(doctor: DoctorDTO) {
+        try {
+            const response = await axios.put(
+                `/modulo/doctor/${doctor.id}`,
+                doctor
+            );
+            return response.data;
+        } catch (error) {
+            console.error("Error updating doctor:", error);
+            throw error;
+        }
+    },
+    async deleteDoctor(id: number) {
+        try {
+            const response = await axios.delete(`/modulo/doctor/${id}`);
+            return response.data;
+        } catch (error) {
+            console.error("Error deleting doctor:", error);
             throw error;
         }
     },

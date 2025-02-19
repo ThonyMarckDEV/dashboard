@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DoctorController;
-use App\Models\Doctor;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 

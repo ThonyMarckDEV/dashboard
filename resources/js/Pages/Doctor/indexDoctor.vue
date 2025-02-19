@@ -23,6 +23,7 @@
                 :is-visible="father.statusModal.delete"
                 :id-doctor="father.idDoctor"
                 @emit-close-modal="closeModalAll('delete')"
+                @emit-success-delete="deleteDoctor"
             />
         </div>
     </AppLayout>
@@ -42,6 +43,7 @@ const {
     emitIdDoctorDelete,
     closeModalAll,
     saveDoctor,
+    deleteDoctor,
 } = useDoctors();
 </script>
 <style scoped></style>

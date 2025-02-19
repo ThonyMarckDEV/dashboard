@@ -52,10 +52,12 @@ class DoctorController extends Controller
      */
     public function store(StoreDoctorRequest $request): JsonResponse
     {
-        $validated = $request->validate();
+        $validated = $request->validated();
+        // se omite el campo state ya que al crear un nuevo doctor siempre se creara activo
         $validated = $request->safe()->except(['state']);
         return response()->json([
-            'message' => 'Doctor creado con exito',
+            'success' => true,
+            'message' => "Doctor {$validated['name']} creado",
             'data' => new DoctorResource(Doctor::create($validated)),
         ], 201);
     }
@@ -74,16 +76,26 @@ class DoctorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDoctorRequest $request, Doctor $doctor)
+    public function update(UpdateDoctorRequest $request, Doctor $doctor): JsonResponse
     {
-        //
+        $validated = $request->validated();
+        $doctor->update($validated);
+        return response()->json([
+            'success' => true,
+            'message' => "Doctor {$doctor->name} actualizado",
+            'data' => new DoctorResource($doctor),
+        ], 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Doctor $doctor)
+    public function destroy(Doctor $doctor): JsonResponse
     {
-        //
+        $doctor->delete();
+        return response()->json([
+            'success' => true,
+            'message' => "Doctor {$doctor->name} eliminado",
+        ], 200);
     }
 }

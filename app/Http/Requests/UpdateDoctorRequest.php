@@ -11,7 +11,7 @@ class UpdateDoctorRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class UpdateDoctorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'code' => 'required|string',
+            'name' => 'required|string',
+            'start_date' => 'required|date',
+            'state' => 'required|boolean',
         ];
     }
 }

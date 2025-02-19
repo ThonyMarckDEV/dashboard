@@ -2,18 +2,18 @@
     <Dialog
         :visible="isVisible"
         modal
-        :header="doctor && doctor.id ? 'Actualizar Doctor' : 'Crear Doctor'"
+        :header="localDoctor.id ? 'Actualizar Doctor' : 'Crear Doctor'"
         :style="{ width: '40vw' }"
         :breakpoints="{ '960px': '75vw', '640px': '100vw' }"
         @update:visible="closeModal"
     >
         <form
-            @submit.prevent="sutmit"
+            @submit.prevent="submit"
             class="flex flex-col gap-4 w-full sm:W-40 pt-3"
         >
             <FloatLabel variant="on">
                 <InputText
-                    v-model="doctor.name"
+                    v-model="localDoctor.name"
                     id="name"
                     type="text"
                     class="w-full"
@@ -26,7 +26,7 @@
                     id="code"
                     type="text"
                     class="w-full"
-                    v-model="doctor.code"
+                    v-model="localDoctor.code"
                 />
                 <label for="code">Codigo</label>
             </FloatLabel>
@@ -34,7 +34,7 @@
                 <DatePicker
                     id="fecha"
                     class="w-full"
-                    v-model="doctor.start_date"
+                    v-model="localDoctor.start_date"
                     input-id="fecha"
                     icon-display="input"
                 />
@@ -42,7 +42,7 @@
             </FloatLabel>
             <ToggleButton
                 id="state"
-                v-model="doctor.state"
+                v-model="localDoctor.state"
                 onLabel="Activo"
                 offLabel="Inactivo"
                 onIcon="pi pi-check"
@@ -52,8 +52,8 @@
             <div class="flex justify-end gap-4">
                 <Button
                     label="Guardar"
-                    :icon="doctor && doctor.id ? 'pi pi-pencil' : 'pi pi-check'"
-                    @click="sutmit"
+                    :icon="localDoctor.id ? 'pi pi-pencil' : 'pi pi-check'"
+                    @click="submit"
                 />
                 <Button
                     label="Cancelar"
@@ -62,9 +62,9 @@
                 />
             </div>
         </form>
-        {{ formulario }}
     </Dialog>
 </template>
+
 <script setup lang="ts">
 import {
     Button,
@@ -75,18 +75,19 @@ import {
     ToggleButton,
 } from "primevue";
 import { Doctor } from "../Interfaces/Doctor";
-import { ref } from "vue";
+import { ref, watch } from "vue";
+
 const { isVisible, doctor } = defineProps<{
     isVisible: boolean;
     doctor?: Doctor;
 }>();
 
-const formulario = ref<Doctor>({
-    id: 0,
-    name: "",
-    code: "",
-    start_date: null,
-    state: null,
+const localDoctor = ref<Doctor>({
+    id: doctor?.id || 0,
+    name: doctor?.name || "",
+    code: doctor?.code || "",
+    start_date: doctor?.start_date || null,
+    state: doctor?.state || true,
 });
 
 const emit = defineEmits<{
@@ -98,14 +99,17 @@ const closeModal = () => {
     emit("emitCloseModal", false);
 };
 
-const sutmit = () => {
-    formulario.value.id = doctor?.id || 0;
-    formulario.value.name = doctor?.name || "";
-    formulario.value.code = doctor?.code || "";
-    formulario.value.start_date = doctor?.start_date || null;
-    formulario.value.state = doctor?.state || true;
-    emit("emitSuccessCreate", formulario.value);
-    // console.log(formulario.value);
+const submit = () => {
+    emit("emitSuccessCreate", localDoctor.value);
 };
+watch(
+    () => doctor,
+    (nuevoDoctor) => {
+        if (nuevoDoctor) {
+            localDoctor.value = { ...nuevoDoctor };
+        }
+    }
+);
 </script>
+
 <style lang="css" scoped></style>
