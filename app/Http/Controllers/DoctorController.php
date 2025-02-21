@@ -13,6 +13,10 @@ use Inertia\Inertia;
 
 class DoctorController extends Controller
 {
+    private const SUCCESS_MESSAGE = 'success';
+    private const MESSAGE = 'message';
+    private const DATA = 'data';
+    private const PAGINATION = 'pagination';
     // funcion para retornar la vista del modulo doctor
     public function listDoctor(): JsonResponse
     {
@@ -24,8 +28,8 @@ class DoctorController extends Controller
                 return $query->where('name', 'like', "%$name%");
             })->paginate(20);
             return response()->json([
-                'data' => DoctorResource::collection($doctors),
-                'pagination' => [
+                self::DATA => DoctorResource::collection($doctors),
+                self::PAGINATION => [
                     'total' => $doctors->total(),
                     'current_page' => $doctors->currentPage(),
                     'per_page' => $doctors->perPage(),
@@ -55,10 +59,11 @@ class DoctorController extends Controller
         $validated = $request->validated();
         // se omite el campo state ya que al crear un nuevo doctor siempre se creara activo
         $validated = $request->safe()->except(['state']);
+        $doctor = Doctor::create($validated);
         return response()->json([
-            'success' => true,
-            'message' => "Doctor {$validated['name']} creado",
-            'data' => new DoctorResource(Doctor::create($validated)),
+            self::SUCCESS_MESSAGE => true,
+            self::MESSAGE => 'Doctor creado',
+            self::DATA => new DoctorResource($doctor),
         ], 201);
     }
 
@@ -68,9 +73,9 @@ class DoctorController extends Controller
     public function show(Doctor $doctor): JsonResponse
     {
         return response()->json([
-            'success' => true,
-            'message' => 'Doctor encontrado',
-            'data' => new DoctorResource($doctor),
+            self::SUCCESS_MESSAGE => true,
+            self::MESSAGE => 'Doctor encontrado',
+            self::DATA => new DoctorResource($doctor),
         ], 200);
     }
     /**
@@ -81,9 +86,9 @@ class DoctorController extends Controller
         $validated = $request->validated();
         $doctor->update($validated);
         return response()->json([
-            'success' => true,
-            'message' => "Doctor {$doctor->name} actualizado",
-            'data' => new DoctorResource($doctor),
+            self::SUCCESS_MESSAGE => true,
+            self::MESSAGE => 'Doctor actualizado',
+            self::DATA => new DoctorResource($doctor),
         ], 200);
     }
 
@@ -94,8 +99,8 @@ class DoctorController extends Controller
     {
         $doctor->delete();
         return response()->json([
-            'success' => true,
-            'message' => "Doctor {$doctor->name} eliminado",
+            self::SUCCESS_MESSAGE => true,
+            self::MESSAGE => 'Doctor eliminado',
         ], 200);
     }
 }

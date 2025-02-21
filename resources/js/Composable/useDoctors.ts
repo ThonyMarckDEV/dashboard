@@ -63,45 +63,23 @@ export const useDoctors = () => {
         try {
             // convertimos a dto
             const doctorDTO = toDoctorDTO(doctor);
-            // si doctor.id es 0 es porque es un nuevo doctor
-            if (doctorDTO.id === 0) {
-                console.log("guardar doctor");
-                const response = await DoctorServices.saveDoctor(doctorDTO);
-                console.log(response);
-                if (response.success) {
-                    showInfo(response.message);
-                    loadingDoctors(
-                        father.pagination.current_page,
-                        father.filter
-                    );
-                    father.statusModal.register = false;
-                } else {
-                    if (response.errors) {
-                        for (const [field, message] of Object.entries(
-                            response.errors
-                        )) {
-                            showError(`${field}: ${message}`);
-                        }
-                    } else {
-                        showError(
-                            response.message || "Error al guardar el doctor"
-                        );
-                    }
-                }
+            // const para response
+            const response =
+                doctorDTO.id === 0
+                    ? await DoctorServices.saveDoctor(doctorDTO)
+                    : await DoctorServices.updateDoctor(doctorDTO);
+            if (response.success) {
+                showInfo(response.message);
+                loadingDoctors(father.pagination.current_page, father.filter);
+                father.statusModal.register = false;
             } else {
-                console.log("actualizar doctor");
-                const response = await DoctorServices.updateDoctor(doctorDTO);
-                if (response.success) {
-                    showInfo(response.message);
-                    loadingDoctors(
-                        father.pagination.current_page,
-                        father.filter
-                    );
-                    father.statusModal.register = false;
-                }
-                console.log(response);
+                const errors = response.errors || {
+                    general: response.message || "Error al guardar el doctor",
+                };
+                Object.entries(errors).forEach(([field, message]) => {
+                    showError(`${field}: ${message}`);
+                });
             }
-            console.log(doctorDTO);
         } catch (error) {
             showError(
                 error.response.data.errors || "Error al guardar el doctor"
@@ -141,14 +119,9 @@ export const useDoctors = () => {
     const emitIdDoctorDelete = (id: number) => {
         father.statusModal.delete = true;
         father.idDoctor = id;
-        console.log(father.idDoctor);
     };
     const closeModalAll = (type: "register" | "delete") => {
-        if (type === "register") {
-            father.statusModal.register = false;
-        } else {
-            father.statusModal.delete = false;
-        }
+        father.statusModal[type] = false;
         father.idDoctor = 0;
         father.doctorData = {} as Doctor;
     };
