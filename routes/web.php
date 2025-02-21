@@ -18,3 +18,4 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified',
         Route::get('doctors/list', [DoctorController::class, 'listDoctor'])->name('doctor.list');
     });
 });
+Route::get('doctors/search', [DoctorController::class, 'searchDoctor'])->name('doctor.search');

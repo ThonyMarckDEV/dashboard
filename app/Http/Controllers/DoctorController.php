@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Pipelines\Filter;
 use App\Models\Doctor;
 use App\Http\Requests\StoreDoctorRequest;
 use App\Http\Requests\UpdateDoctorRequest;
 use App\Http\Resources\DoctorResource;
+use App\Pipelines\FilterByDate;
+use App\Pipelines\FilterByName;
+use App\Pipelines\FilterByState;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class DoctorController extends Controller
@@ -106,5 +110,20 @@ class DoctorController extends Controller
             self::SUCCESS_MESSAGE => true,
             self::MESSAGE => 'Doctor eliminado',
         ], 200);
+    }
+
+    public function searchDoctor(Request $request)
+    {
+        // array of filter classes to apply
+        $filters = [
+            FilterByName::class,
+            FilterByDate::class,
+            FilterByState::class,
+        ];
+        $doctors = (new Filter())->execute($filters);
+        return response()->json([
+            self::DATA => DoctorResource::collection($doctors),
+            'filters applied' => $filters,
+        ]);
     }
 }
