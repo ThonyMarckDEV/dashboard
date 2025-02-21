@@ -123,6 +123,14 @@ class DoctorController extends Controller
         $doctors = (new Filter())->execute($filters);
         return response()->json([
             self::DATA => DoctorResource::collection($doctors),
+            self::PAGINATION => [
+                'total' => $doctors->total(),
+                'current_page' => $doctors->currentPage(),
+                'per_page' => $doctors->perPage(),
+                'last_page' => $doctors->lastPage(),
+                'from' => $doctors->firstItem(),
+                'to' => $doctors->lastItem(),
+            ],
             'filters applied' => $filters,
         ]);
     }

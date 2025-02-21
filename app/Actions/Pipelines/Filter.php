@@ -20,6 +20,6 @@ class Filter
         FilterByName::class,
         FilterByDate::class,
       ])
-      ->thenReturn()->get();
+      ->thenReturn()->paginate(5);
   }
 }
