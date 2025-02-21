@@ -12,7 +12,8 @@ class DoctorPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->hasPermissionTo('view doctors');
+        // return $user->hasPermissionTo('view doctors');
+        return $user->can('view doctors');
         // return $user->hasRole('admin');
     }
 
@@ -21,7 +22,7 @@ class DoctorPolicy
      */
     public function view(User $user, Doctor $doctor): bool
     {
-        return true;
+        return $user->can('view doctors');
     }
 
     /**
@@ -29,7 +30,7 @@ class DoctorPolicy
      */
     public function create(User $user): bool
     {
-        return true;
+        return $user->can('create doctors');
     }
 
     /**
@@ -37,7 +38,7 @@ class DoctorPolicy
      */
     public function update(User $user, Doctor $doctor): bool
     {
-        return true;
+        return $user->can('edit doctors');
     }
 
     /**
@@ -45,7 +46,7 @@ class DoctorPolicy
      */
     public function delete(User $user, Doctor $doctor): bool
     {
-        return true;
+        return $user->can('delete doctors');
     }
 
     /**

@@ -56,6 +56,7 @@ class DoctorController extends Controller
      */
     public function store(StoreDoctorRequest $request): JsonResponse
     {
+        Gate::authorize('create', Doctor::class);
         $validated = $request->validated();
         // se omite el campo state ya que al crear un nuevo doctor siempre se creara activo
         $validated = $request->safe()->except(['state']);
@@ -72,6 +73,7 @@ class DoctorController extends Controller
      */
     public function show(Doctor $doctor): JsonResponse
     {
+        Gate::authorize('view', $doctor);
         return response()->json([
             self::SUCCESS_MESSAGE => true,
             self::MESSAGE => 'Doctor encontrado',
@@ -83,6 +85,7 @@ class DoctorController extends Controller
      */
     public function update(UpdateDoctorRequest $request, Doctor $doctor): JsonResponse
     {
+        Gate::authorize('update', $doctor);
         $validated = $request->validated();
         $doctor->update($validated);
         return response()->json([
@@ -97,6 +100,7 @@ class DoctorController extends Controller
      */
     public function destroy(Doctor $doctor): JsonResponse
     {
+        Gate::authorize('delete', $doctor);
         $doctor->delete();
         return response()->json([
             self::SUCCESS_MESSAGE => true,
