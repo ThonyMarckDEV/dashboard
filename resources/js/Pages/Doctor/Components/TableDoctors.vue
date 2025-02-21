@@ -11,7 +11,6 @@
         scroll-height="35rem"
         data-key="id"
         show-gridlines
-        striped-rows
         :loading="loadingTable"
     >
         <template #paginatorstart>

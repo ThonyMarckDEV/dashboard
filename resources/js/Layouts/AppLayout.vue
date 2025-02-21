@@ -17,7 +17,7 @@ defineProps({
         <Header />
         <div class="flex flex-1">
             <Aside />
-            <main class="flex-1 p-4">
+            <main class="flex-1 p-2">
                 <Toast position="bottom-right" group="br" />
                 <slot />
             </main>

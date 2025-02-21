@@ -1,14 +1,13 @@
 <template>
     <aside
+        class="aside"
         :class="[
             'text-primary-900 w-64 transition-all duration-300 mb-2 rounded-r-lg shadow hover:shadow-lg',
             {
                 'ml-0': AsideStore.isAsideVisible,
                 '-ml-64': !AsideStore.isAsideVisible,
             },
-            ThemeStore.isDarkMode
-                ? 'dark:bg-slate-800 dark:text-white'
-                : 'text-primary-900',
+            ThemeStore.isDarkMode ? 'dark:bg-slate-900' : 'text-primary-900',
         ]"
     >
         <nav class="p-4">
@@ -31,11 +30,11 @@
                                 <i
                                     :class="[
                                         item.icon,
-                                        'text-lg text-primary-700 text-blue-500',
+                                        'text-lg text-primary-700 text-sky-700',
                                     ]"
                                 ></i>
                                 <span
-                                    class="transition-opacity duration-300 text-blue-500"
+                                    class="transition-opacity duration-300 text-sky-700"
                                 >
                                     {{ item.label }}
                                 </span>
@@ -46,7 +45,7 @@
                                     openMenus[index]
                                         ? 'pi-chevron-down'
                                         : 'pi-chevron-right',
-                                    'text-blue-500 dark:text-primary-300',
+                                    'text-sky-700 dark:text-primary-300',
                                 ]"
                             ></i>
                         </div>

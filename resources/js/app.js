@@ -42,17 +42,17 @@ const myPreset = definePreset(Aura, {
             light: {
                 surface: {
                     0: "#ffffff",
-                    50: " {cyan.50}",
-                    100: "{cyan.100}",
-                    200: "{cyan.200}",
-                    300: "{cyan.300}",
-                    400: "{cyan.400}",
-                    500: "{cyan.500}",
-                    600: "{cyan.600}",
-                    700: "{cyan.700}",
-                    800: "{cyan.800}",
-                    900: "{cyan.900}",
-                    950: "{cyan.950}",
+                    50: " {sky.50}",
+                    100: "{sky.100}",
+                    200: "{sky.200}",
+                    300: "{sky.300}",
+                    400: "{sky.400}",
+                    500: "{sky.500}",
+                    600: "{sky.600}",
+                    700: "{sky.700}",
+                    800: "{sky.800}",
+                    900: "{sky.900}",
+                    950: "{sky.950}",
                 },
                 formField: {
                     hoverBorderColor: "{primary.color}",
@@ -61,7 +61,7 @@ const myPreset = definePreset(Aura, {
             dark: {
                 surface: {
                     0: "#ffffff",
-                    50: "{slate.50}",
+                    50: "{ slate.50}",
                     100: "{slate.100}",
                     200: "{slate.200}",
                     300: "{slate.300}",
